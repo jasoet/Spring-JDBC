@@ -14,12 +14,16 @@
     <context:property-placeholder properties-ref="databaseProperties"/>
 
     <context:component-scan base-package="id.ac.pcr.springjdbc.dao.*"/>
+    <context:component-scan base-package="id.ac.pcr.springjdbc.service.*"/>
 
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close" p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}"
           p:username="${jdbc.username}" p:password="${jdbc.password}" p:maxWait="40000"
           p:maxActive="80" p:maxIdle="20"/>
+
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager"
+          p:dataSource-ref="dataSource"/>
 
 
     <tx:annotation-driven/>
