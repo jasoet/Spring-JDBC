@@ -21,17 +21,18 @@ public class DosenServlet extends HttpServlet {
 
     private String list = "/WEB-INF/jsp/dosen/list.jsp";
     private String show = "/WEB-INF/jsp/dosen/show.jsp";
-    private DosenDAO dosenDAO;
+
 
     public DosenServlet() {
-        ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        dosenDAO = ac.getBean("dosenDAOimpl", DosenDAO.class);
+
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+            DosenDAO dosenDAO = ac.getBean("dosenDAOimpl", DosenDAO.class);
 
             String action = request.getParameter("action");
             if (action != null) {
