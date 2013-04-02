@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <!--Config Spring akan diload oleh Servlet-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:META-INF/spring/**/applicationContext*.xml
+        </param-value>
+    </context-param>
+
+    <!--Config listerner agar spring context di load-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+
+    <servlet>
+        <servlet-name>DosenServlet</servlet-name>
+        <servlet-class>id.ac.pcr.springjdbc.servlet.DosenServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DosenServlet</servlet-name>
+        <url-pattern>/dosen</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
