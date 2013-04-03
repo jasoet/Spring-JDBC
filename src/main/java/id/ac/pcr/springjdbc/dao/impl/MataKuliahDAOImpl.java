@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author jasoet
  */
-@Component("mataKuliahDAOimpl")
+@Component
 public class MataKuliahDAOImpl implements MataKuliahDAO {
 
 
@@ -85,16 +85,30 @@ public class MataKuliahDAOImpl implements MataKuliahDAO {
 
     @Transactional
     public int insert(MataKuliah d) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String sql = "INSERT INTO mata_kuliah (kode,nama,dosen_id) VALUES (?,?,?)";
+        PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        ps.setString(1, d.getKode());
+        ps.setString(2, d.getNama());
+        ps.setInt(3, d.getDosen().getId());
+        return ps.executeUpdate();
     }
 
     @Transactional
     public int delete(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String sql = "DELETE FROM mata_kuliah WHERE mata_kuliah_id=?";
+        PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps.executeUpdate();
     }
 
     @Transactional
     public int update(int id, MataKuliah newMataKuliah) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String sql = "UPDATE mata_kuliah SET kode=?,nama=?,dosen_id=? WHERE mata_kuliah_id=?";
+        PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        ps.setString(1, newMataKuliah.getKode());
+        ps.setString(2, newMataKuliah.getNama());
+        ps.setString(3, newMataKuliah.getDosen().getNiy());
+        ps.setInt(4, id);
+        return ps.executeUpdate();
     }
 }

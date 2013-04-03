@@ -1,10 +1,10 @@
 package id.ac.pcr.springjdbc.dao.impl;
 
-import id.ac.pcr.springjdbc.dao.DosenDAO;
+import id.ac.pcr.springjdbc.dao.MahasiswaDAO;
 import id.ac.pcr.springjdbc.model.Dosen;
+import id.ac.pcr.springjdbc.model.Mahasiswa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -13,66 +13,70 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: isaninside
+ * Date: 4/3/13
+ * Time: 10:02 AM
+ * To change this template use File | Settings | File Templates.
+ */
 @Component
-public class DosenDAOImpl implements DosenDAO {
-
+public class MahasiswaDAOImpl implements MahasiswaDAO {
 
     @Autowired
     private DataSource dataSource;
 
-
     @Override
-    public Dosen getByNiy(String niy) throws SQLException {
-        String sql = "SELECT d.dosen_id as id,d.niy,d.nama FROM dosen d WHERE d.niy=?";
+    public Mahasiswa getByNim(String nim) throws SQLException {
+        String sql = "SELECT d.mahasiswa_id as id,d.nim,d.nama FROM mahasiswa d WHERE d.nim=?";
         PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
 
-        ps.setString(1, niy);
+        ps.setString(1, nim);
         ResultSet rs = ps.executeQuery();
 
-        Dosen result = null;
+        Mahasiswa result = null;
 
         if (rs.next()) {
-            result = new Dosen();
+            result = new Mahasiswa();
             result.setId(rs.getInt("id"));
-            result.setNiy(rs.getString("niy"));
+            result.setNim(rs.getString("nim"));
             result.setNama(rs.getString("nama"));
-
         }
         return result;
-
     }
 
-    public List<Dosen> getAll() throws SQLException {
-        String sql = "SELECT d.dosen_id AS id,d.niy,d.nama FROM dosen d";
+    @Override
+    public List<Mahasiswa> getAll() throws SQLException {
+        String sql = "SELECT d.mahasiswa_id AS id,d.nim,d.nama FROM mahasiswa d";
         PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
 
         ResultSet rs = ps.executeQuery();
-        List<Dosen> data = new ArrayList<Dosen>();
+        List<Mahasiswa> data = new ArrayList<Mahasiswa>();
 
         while (rs.next()) {
-            Dosen d = new Dosen();
+            Mahasiswa d = new Mahasiswa();
             d.setId(rs.getInt("id"));
-            d.setNiy(rs.getString("niy"));
+            d.setNim(rs.getString("nim"));
             d.setNama(rs.getString("nama"));
             data.add(d);
         }
 
         return data;
-
     }
 
-    public List<Dosen> getByNama(String nama) throws SQLException {
-        String sql = "SELECT d.dosen_id AS id,d.niy,d.nama FROM dosen d WHERE d.nama LIKE ?";
+    @Override
+    public List<Mahasiswa> getByNama(String nama) throws SQLException {
+        String sql = "SELECT d.mahasiswa_id AS id,d.nim,d.nama FROM mahasiswa d WHERE d.nama LIKE ?";
         PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
         ps.setString(1, "%" + nama + "%");
 
         ResultSet rs = ps.executeQuery();
-        List<Dosen> data = new ArrayList<Dosen>();
+        List<Mahasiswa> data = new ArrayList<Mahasiswa>();
 
         while (rs.next()) {
-            Dosen d = new Dosen();
+            Mahasiswa d = new Mahasiswa();
             d.setId(rs.getInt("id"));
-            d.setNiy(rs.getString("niy"));
+            d.setNim(rs.getString("nim"));
             d.setNama(rs.getString("nama"));
             data.add(d);
         }
@@ -80,29 +84,29 @@ public class DosenDAOImpl implements DosenDAO {
         return data;
     }
 
-    @Transactional
-    public int insert(Dosen d) throws SQLException {
-        String sql = "INSERT INTO dosen (niy,nama) VALUES (?,?)";
+    @Override
+    public int insert(Mahasiswa d) throws SQLException {
+        String sql = "INSERT INTO mahasiswa (nim,nama) VALUES (?,?)";
         PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
-        ps.setString(1, d.getNiy());
+        ps.setString(1, d.getNim());
         ps.setString(2, d.getNama());
         return ps.executeUpdate();
     }
 
-    @Transactional
+    @Override
     public int delete(int id) throws SQLException {
-        String sql = "DELETE FROM dosen WHERE dosen_id=?";
+        String sql = "DELETE FROM mahasiswa WHERE mahasiswa_id=?";
         PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
         ps.setInt(1, id);
         return ps.executeUpdate();
     }
 
-    @Transactional
-    public int update(int id, Dosen newDosen) throws SQLException {
-        String sql = "UPDATE dosen SET niy=?,nama=? WHERE dosen_id=?";
+    @Override
+    public int update(int id, Mahasiswa newMahasiswa) throws SQLException {
+        String sql = "UPDATE mahasiswa SET nim=?,nama=? WHERE mahasiswa_id=?";
         PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
-        ps.setString(1, newDosen.getNiy());
-        ps.setString(2, newDosen.getNama());
+        ps.setString(1, newMahasiswa.getNim());
+        ps.setString(2, newMahasiswa.getNama());
         ps.setInt(3, id);
         return ps.executeUpdate();
     }
