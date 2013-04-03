@@ -83,7 +83,8 @@ public class DosenServlet extends HttpServlet {
         String niy = req.getParameter("niy");
         String nama = req.getParameter("nama");
 
-        ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+        ApplicationContext ac =
+                WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
         DosenDAO dosenDAO = ac.getBean("dosenDAOImpl", DosenDAO.class);
 
         Dosen d = new Dosen();
@@ -94,7 +95,7 @@ public class DosenServlet extends HttpServlet {
             dosenDAO.insert(d);
             resp.sendRedirect(req.getContextPath() + "/dosen");
         } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
