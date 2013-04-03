@@ -6,7 +6,7 @@
     <version>0.1-DEV</version>
     <inceptionYear>2012</inceptionYear>
     <artifactId>spring-jdbc</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>Spring JDBC Template</name>
 
 
@@ -102,8 +102,6 @@
             <artifactId>joda-time</artifactId>
             <version>${joda-time.version}</version>
         </dependency>
-
-
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
