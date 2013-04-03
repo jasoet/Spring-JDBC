@@ -21,6 +21,7 @@ public class DosenServlet extends HttpServlet {
 
     private String list = "/WEB-INF/jsp/dosen/list.jsp";
     private String show = "/WEB-INF/jsp/dosen/show.jsp";
+    private String newPage = "/WEB-INF/jsp/dosen/new.jsp";
 
 
     public DosenServlet() {
@@ -32,7 +33,7 @@ public class DosenServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-            DosenDAO dosenDAO = ac.getBean("dosenDAOimpl", DosenDAO.class);
+            DosenDAO dosenDAO = ac.getBean("dosenDAOImpl", DosenDAO.class);
 
             String action = request.getParameter("action");
             if (action != null) {
@@ -49,6 +50,9 @@ public class DosenServlet extends HttpServlet {
                     RequestDispatcher dispacher = request.getRequestDispatcher(show);
                     dispacher.forward(request, response);
 
+                } else if (action.equalsIgnoreCase("new")) {
+                    RequestDispatcher dispacher = request.getRequestDispatcher(newPage);
+                    dispacher.forward(request, response);
                 }
             } else {
                 String nama = request.getParameter("nama");
@@ -76,7 +80,22 @@ public class DosenServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        String niy = req.getParameter("niy");
+        String nama = req.getParameter("nama");
+
+        ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+        DosenDAO dosenDAO = ac.getBean("dosenDAOImpl", DosenDAO.class);
+
+        Dosen d = new Dosen();
+        d.setNiy(niy);
+        d.setNama(nama);
+
+        try {
+            dosenDAO.insert(d);
+            resp.sendRedirect(req.getContextPath() + "/dosen");
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
 

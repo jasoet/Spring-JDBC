@@ -20,6 +20,8 @@
             nama
         </td>
     </tr>
+
+
     <c:if test="${not empty data}">
         <c:forEach var="dosen" items="${data}">
             <tr>

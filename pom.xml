@@ -6,7 +6,7 @@
     <version>0.1-DEV</version>
     <inceptionYear>2012</inceptionYear>
     <artifactId>spring-jdbc</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>Spring JDBC Template</name>
 
 
